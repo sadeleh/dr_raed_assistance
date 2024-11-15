@@ -4,35 +4,49 @@ Streamlit Chatbot Application with Stylish RTL Design
 """
 
 import os
+import logging
 import streamlit as st
 
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.StreamHandler()  # Logs to the console
+    ]
+)
+
+logger = logging.getLogger(__name__)
+
+# Environment setup
 os.environ["LD_LIBRARY_PATH"] = "./bin"
 
-os.environ["OPENAI_API_KEY"]  = st.secrets["OPENAI_API_KEY"]
-x = st.secrets["OPENAI_API_KEY"]
-print(f"Hello >>> OPENAI_API_KEY >> {x}")
+# Load OpenAI API Key from secrets
+try:
+    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+    logger.info("OPENAI_API_KEY successfully loaded from secrets.")
+except KeyError as e:
+    logger.error("OPENAI_API_KEY is missing in Streamlit secrets.", exc_info=True)
+    raise RuntimeError("Missing OPENAI_API_KEY in Streamlit secrets.") from e
 
+# Verify `pysqlite3` installation
 try:
     import pysqlite3
-    print("pysqlite3 installed successfully.")
-except ImportError:
-    raise RuntimeError("pysqlite3 is not installed. Please use a supported environment.")
-    
-    
-from embedchain import App
+    logger.info("pysqlite3 installed successfully.")
+except ImportError as e:
+    logger.error("pysqlite3 is not installed. Please ensure it is included in the environment.", exc_info=True)
+    raise RuntimeError("pysqlite3 is not installed. Please use a supported environment.") from e
 
+# Import EmbedChain App
+try:
+    from embedchain import App
+    app = App()
+    logger.info("EmbedChain App initialized successfully.")
+except Exception as e:
+    logger.error("Failed to initialize EmbedChain App.", exc_info=True)
+    raise e
 
-# Initialize EmbedChain application
-app = App()
-
-# Function to load data (if applicable, from documents)
-# def load_documents(directory_path):
-#     for filename in os.listdir(directory_path):
-#         file_path = os.path.join(directory_path, filename)
-#         if os.path.isfile(file_path):
-#             app.add(file_path)
-
-# Streamlit UI
+# Streamlit UI setup
 st.set_page_config(
     page_title="🤖 اسأل الدكتور الرائد",
     page_icon="🤖",
@@ -40,7 +54,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Custom CSS for Stylish and Cozy RTL Layout
+# Custom CSS for Stylish RTL Layout
 rtl_css = """
 <style>
     /* Global Styling */
@@ -124,7 +138,7 @@ st.markdown(rtl_css, unsafe_allow_html=True)
 
 # Title and Description
 st.title("🤖 شات بوت مريح وأنيق")
-st.markdown("معك المساعد الذكي للدكتور رائد ")
+st.markdown("معك المساعد الذكي للدكتور رائد")
 
 # Input section for user queries
 user_query = st.text_input("❓ أدخل سؤالك هنا:")
@@ -133,14 +147,16 @@ user_query = st.text_input("❓ أدخل سؤالك هنا:")
 if st.button("💬 اسأل"):
     if user_query.strip():
         with st.spinner("⏳ جاري معالجة سؤالك..."):
-            # Query the RAG-based model
             try:
                 response = app.query(user_query)
+                logger.info(f"Query processed successfully: {user_query}")
                 st.success("✅ الإجابة:")
                 st.markdown(response)
             except Exception as e:
+                logger.error(f"Error while processing query: {user_query}", exc_info=True)
                 st.error(f"❌ حدث خطأ: {e}")
     else:
+        logger.warning("User attempted to submit an empty query.")
         st.warning("⚠️ يرجى إدخال سؤال قبل الضغط على 'اسأل'.")
 
 # Optional: Sidebar for additional functionality
@@ -149,7 +165,9 @@ if st.sidebar.button("📂 تحميل الملفات"):
     with st.spinner("⏳ جاري تحميل الملفات..."):
         try:
             DIR_PATH = "DrRaed"  # Ensure this path is correct relative to app.py
-            
+            # Code to load documents (placeholder)
+            logger.info(f"Files loaded from directory: {DIR_PATH}")
             st.sidebar.success("✅ تم تحميل الملفات بنجاح.")
         except Exception as e:
+            logger.error("Error while loading files.", exc_info=True)
             st.sidebar.error(f"❌ خطأ في تحميل الملفات: {e}")
