@@ -7,7 +7,6 @@ import os
 import streamlit as st
 from embedchain import App
 
-#os.environ["OPENAI_API_KEY"] = "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"
 os.environ["OPENAI_API_KEY"] =st.secrets["OPENAI_API_KEY"]
 # Initialize EmbedChain application
 app = App()
