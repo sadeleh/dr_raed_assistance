@@ -3,16 +3,29 @@
 Streamlit Chatbot Application with Stylish RTL Design
 """
 
-
-
 import os
 import streamlit as st
 from embedchain import App
 
-# Set up environment variable for OpenAI API Key
-
+#os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] =st.secrets["OPENAI_API_KEY"]
 # Initialize EmbedChain application
 app = App()
+
+# Function to load data (if applicable, from documents)
+# def load_documents(directory_path):
+#     for filename in os.listdir(directory_path):
+#         file_path = os.path.join(directory_path, filename)
+#         if os.path.isfile(file_path):
+#             app.add(file_path)
+
+# Streamlit UI
+st.set_page_config(
+    page_title="🤖 اسأل الدكتور الرائد",
+    page_icon="🤖",
+    layout="centered",
+    initial_sidebar_state="expanded",
+)
 
 # Custom CSS for Stylish and Cozy RTL Layout
 rtl_css = """
@@ -96,9 +109,9 @@ rtl_css = """
 # Inject CSS for Stylish RTL
 st.markdown(rtl_css, unsafe_allow_html=True)
 
-# Streamlit UI
-st.title("🤖 اسأل الدكتور رائد ")
-st.markdown("هذا المساعد الذكي يجيب على اسئلتك ! ماذا يدور في عقلك ")
+# Title and Description
+st.title("🤖 شات بوت مريح وأنيق")
+st.markdown("معك المساعد الذكي للدكتور رائد ")
 
 # Input section for user queries
 user_query = st.text_input("❓ أدخل سؤالك هنا:")
@@ -122,7 +135,8 @@ st.sidebar.header("خيارات إضافية")
 if st.sidebar.button("📂 تحميل الملفات"):
     with st.spinner("⏳ جاري تحميل الملفات..."):
         try:
-            # Add your document loading logic here
+            DIR_PATH = "DrRaed"  # Ensure this path is correct relative to app.py
+            
             st.sidebar.success("✅ تم تحميل الملفات بنجاح.")
         except Exception as e:
             st.sidebar.error(f"❌ خطأ في تحميل الملفات: {e}")
