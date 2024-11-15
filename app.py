@@ -5,6 +5,9 @@ Streamlit Chatbot Application with Stylish RTL Design
 
 import os
 import streamlit as st
+
+os.environ["LD_LIBRARY_PATH"] = os.path.join(os.getcwd(), "bin")
+
 from embedchain import App
 
 
