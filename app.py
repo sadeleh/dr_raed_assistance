@@ -8,6 +8,9 @@ import streamlit as st
 
 os.environ["LD_LIBRARY_PATH"] = "./bin"
 
+os.environ["OPENAI_API_KEY"]  = st.secrets["OPENAI_API_KEY"]
+x = st.secrets["OPENAI_API_KEY"]
+print(f"Hello >>> OPENAI_API_KEY >> {x}")
 
 try:
     import pysqlite3
@@ -21,7 +24,7 @@ from embedchain import App
 
 # Initialize EmbedChain application
 app = App()
-#os.environ["OPENAI_API_KEY"]  = st.secrets["OPENAI_API_KEY"]
+
 # Function to load data (if applicable, from documents)
 # def load_documents(directory_path):
 #     for filename in os.listdir(directory_path):
