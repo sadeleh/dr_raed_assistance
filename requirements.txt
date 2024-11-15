@@ -1,0 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Nov 16 01:35:50 2024
+
+@author: Gladiator
+"""
+
+streamlit
+embedchain
+openai
