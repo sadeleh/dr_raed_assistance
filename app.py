@@ -8,6 +8,14 @@ import streamlit as st
 
 os.environ["LD_LIBRARY_PATH"] = "./bin"
 
+
+try:
+    import pysqlite3
+    print("pysqlite3 installed successfully.")
+except ImportError:
+    raise RuntimeError("pysqlite3 is not installed. Please use a supported environment.")
+    
+    
 from embedchain import App
 
 
