@@ -24,6 +24,10 @@ logger = logging.getLogger(__name__)
 # Environment setup
 os.environ["LD_LIBRARY_PATH"] = "./bin"
 
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 # Load OpenAI API Key from secrets
 try:
     os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]

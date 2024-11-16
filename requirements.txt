@@ -1,3 +1,4 @@
 streamlit
 embedchain
-chromadb
+pysqlite3-binary
+
