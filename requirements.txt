@@ -1,5 +1,6 @@
 streamlit
 embedchain
+chromadb
 openai
-pysqlite3-binary
-chromadb==0.3.25
+pydantic-settings
+pydantic<2.0.0
