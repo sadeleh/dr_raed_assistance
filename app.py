@@ -3,16 +3,16 @@
 Streamlit Chatbot Application with Stylish RTL Design
 """
 
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# __import__('pysqlite3')
+# import sys
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 import os
 import logging
 import streamlit as st
 
 
-os.environ["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(__file__), "bin")
+#os.environ["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(__file__), "bin")
 
 from embedchain import App
 import warnings
@@ -43,14 +43,16 @@ except KeyError as e:
     raise RuntimeError("Missing OPENAI_API_KEY in Streamlit secrets.") from e
 
 # Verify `pysqlite3` installation
-try:
-    import pysqlite3
-    logger.info("pysqlite3 installed successfully.")
-except ImportError as e:
-    logger.error("pysqlite3 is not installed. Please ensure it is included in the environment.", exc_info=True)
-    raise RuntimeError("pysqlite3 is not installed. Please use a supported environment.") from e
+# try:
+#     import pysqlite3
+#     logger.info("pysqlite3 installed successfully.")
+# except ImportError as e:
+#     logger.error("pysqlite3 is not installed. Please ensure it is included in the environment.", exc_info=True)
+#     raise RuntimeError("pysqlite3 is not installed. Please use a supported environment.") from e
 
 # Import EmbedChain App
+
+app = None
 try:
     from embedchain import App
     app = App()
