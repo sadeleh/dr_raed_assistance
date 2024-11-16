@@ -1,4 +1,5 @@
 streamlit
 embedchain
+sqlalchemy>=1.4
+alembic
 pysqlite3-binary
-
