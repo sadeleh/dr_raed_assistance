@@ -3,13 +3,15 @@
 Streamlit Chatbot Application with Stylish RTL Design
 """
 
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 import os
 import logging
 import streamlit as st
 
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 os.environ["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(__file__), "bin")
 
 from embedchain import App
