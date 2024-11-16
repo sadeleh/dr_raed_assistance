@@ -6,6 +6,10 @@ Streamlit Chatbot Application with Stylish RTL Design
 import os
 import logging
 import streamlit as st
+from chromadb.config import Settings
+from embedchain import App
+import warnings
+warnings.filterwarnings("ignore", category=SyntaxWarning)
 
 # Configure logging
 logging.basicConfig(
@@ -40,7 +44,8 @@ except ImportError as e:
 # Import EmbedChain App
 try:
     from embedchain import App
-    app = App()
+    settings = Settings(anonymized_telemetry=False)
+    app = App(config=settings)
     logger.info("EmbedChain App initialized successfully.")
 except Exception as e:
     logger.error("Failed to initialize EmbedChain App.", exc_info=True)
