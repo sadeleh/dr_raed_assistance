@@ -6,7 +6,6 @@ Streamlit Chatbot Application with Stylish RTL Design
 import os
 import logging
 import streamlit as st
-from chromadb.config import Settings
 from embedchain import App
 import warnings
 warnings.filterwarnings("ignore", category=SyntaxWarning)
