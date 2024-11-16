@@ -44,8 +44,7 @@ except ImportError as e:
 # Import EmbedChain App
 try:
     from embedchain import App
-    settings = Settings(anonymized_telemetry=False)
-    app = App(config=settings)
+    app = App()
     logger.info("EmbedChain App initialized successfully.")
 except Exception as e:
     logger.error("Failed to initialize EmbedChain App.", exc_info=True)
