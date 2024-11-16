@@ -1,3 +1,4 @@
 streamlit
-embedchain
+embedchain==0.1.125
 openai
+sqlalchemy==2.0.35
