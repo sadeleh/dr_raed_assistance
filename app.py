@@ -6,6 +6,11 @@ Streamlit Chatbot Application with Stylish RTL Design
 import os
 import logging
 import streamlit as st
+
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 from embedchain import App
 import warnings
 warnings.filterwarnings("ignore", category=SyntaxWarning)
@@ -22,11 +27,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Environment setup
-os.environ["LD_LIBRARY_PATH"] = "./bin"
+#os.environ["LD_LIBRARY_PATH"] = "./bin"
 
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 
 # Load OpenAI API Key from secrets
 try:
